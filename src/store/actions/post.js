@@ -29,8 +29,8 @@ export const removePost = (id) => async (dispatch) => {
 }
 
 export const addPost = (post) => async (dispatch) => {
-  const fileName = post.img.split('/').pop()
-  const newPath = FileSystem.documentDirectory + fileName
+  const fileName = post.img.split('/')
+  const newPath = FileSystem.documentDirectory + fileName.pop()
 
   try {
     await FileSystem.moveAsync({
@@ -43,9 +43,12 @@ export const addPost = (post) => async (dispatch) => {
 
   const payload = { ...post, img: newPath }
 
-  const id = await DB.createPost(payload)
-
-  payload.id = id
+  try {
+    const id = await DB.createPost(payload)
+    payload.id = id
+  } catch (error) {
+    console.log('🚀 ~ Error', error)
+  }
 
   dispatch({
     type: ADD_POST,
