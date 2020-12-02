@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Button,
-  Image,
   StyleSheet,
   ScrollView,
   Text,
@@ -13,25 +12,28 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useDispatch } from 'react-redux'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { PhotoPicker } from '../components/PhotoPicker'
 import { addPost } from '../store/actions/post'
 import { THEME } from '../theme'
-
-const img =
-  'https://cdn.londonandpartners.com/visit/general-london/areas/river/76709-640x360-houses-of-parliament-and-london-eye-on-thames-from-above-640.jpg'
 
 export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
+  const imgRef = useRef()
 
   const saveHandler = () => {
     const post = {
-      img,
+      img: imgRef.current,
       text,
       date: new Date().toJSON(),
       booked: false,
     }
     dispatch(addPost(post))
     navigation.navigate('Main')
+  }
+
+  const photoPickHandler = (uri) => {
+    imgRef.current(uri)
   }
 
   return (
@@ -46,16 +48,12 @@ export const CreateScreen = ({ navigation }) => {
             onChange={setText}
             multiline
           />
-          <Image
-            stile={{ width: '100%', height: 200, marginBottom: 10 }}
-            source={{
-              uri: img,
-            }}
-          />
+          <PhotoPicker onPick={photoPickHandler} />
           <Button
             title="Create"
             color={THEME.MAIN_COLOR}
             onPress={saveHandler}
+            disabled={!text}
           />
         </View>
       </TouchableWithoutFeedback>
