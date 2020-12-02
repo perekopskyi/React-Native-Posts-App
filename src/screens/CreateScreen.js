@@ -45,7 +45,7 @@ export const CreateScreen = ({ navigation }) => {
             style={styles.textarea}
             placeholder="Enter post's text"
             value={text}
-            onChange={setText}
+            onChangeText={setText}
             multiline
           />
           <PhotoPicker onPick={photoPickHandler} />
