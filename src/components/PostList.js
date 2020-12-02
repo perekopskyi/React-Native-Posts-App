@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, FlatList, View } from 'react-native'
+import { StyleSheet, FlatList, View, Text } from 'react-native'
 import { Post } from './Post'
 
-export const PostList = ({ data, onOpen }) => {
+export const PostList = ({ data = [], onOpen }) => {
   if (!data.length) {
     return (
       <View style={styles.wrapper}>

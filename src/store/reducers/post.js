@@ -11,7 +11,7 @@ export const postReducer = (state = initialState, action) => {
     case LOAD_POSTS:
       return {
         ...state,
-        allposts: action.payload,
+        allPosts: action.payload,
         bookedPosts: action.payload.filter((post) => post.booked),
         loading: false,
       }
@@ -25,7 +25,7 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         allPosts,
-        bookedPosts: action.payload.filter((post) => post.booked),
+        bookedPosts: allPosts.filter((post) => post.booked),
       }
     case REMOVE_POST:
       return {

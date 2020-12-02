@@ -33,7 +33,7 @@ export const CreateScreen = ({ navigation }) => {
   }
 
   const photoPickHandler = (uri) => {
-    imgRef.current(uri)
+    imgRef.current = uri
   }
 
   return (
